@@ -19,9 +19,10 @@ Matrix = []
 Verticals = []
 Horizontals = []
 firstline = True;
-for line in range(len(lines)):
+#for line in range(len(lines)):
+for line in range(100):
     if firstline:
-        N = int(lines[line][0])
+        N = int(lines[line])
         firstline = False
     else:
         row = []
@@ -64,28 +65,51 @@ print('part2')
 dict = {}
 for combo in Combos:
     first = combo[0]
-    if isinstance(first, int):
-        firsttags = set(Matrix[first][2])
-    else:
-        firsttags = set(Matrix[first[0]][2]).union(set(Matrix[first[1]][2]))
     second = combo[1]
-    if isinstance(second, int):
-        secondtags = set(Matrix[second][2])
+    if not isinstance(first, int) and not isinstance(second, int):
+        if(first[0] != second[0] and first[0] != second[1] and first[1] != second[0] and first[1] != second[1]):
+            if isinstance(first, int):
+                firsttags = set(Matrix[first][2])
+            else:
+                firsttags = set(Matrix[first[0]][2]).union(set(Matrix[first[1]][2]))
+
+            if isinstance(second, int):
+                secondtags = set(Matrix[second][2])
+            else:
+                secondtags = set(Matrix[second[0]][2]).union(set(Matrix[second[1]][2]))
+            commonTags = firsttags.intersection(secondtags)
+            firstOnly = firsttags.difference(secondtags)
+            #print(firstOnly)
+            secondOnly = secondtags.difference(firsttags)
+            #print(secondOnly)
+            commonLength = len(commonTags)
+            firstLength = len(firstOnly)
+            secondLength = len(secondOnly)
+            score = min(commonLength, secondLength, firstLength)
+            dict[combo] = score
     else:
-        secondtags = set(Matrix[second[0]][2]).union(set(Matrix[second[1]][2]))
-    commonTags = firsttags.intersection(secondtags)
-    firstOnly = firsttags.difference(secondtags)
-    #print(firstOnly)
-    secondOnly = secondtags.difference(firsttags)
-    #print(secondOnly)
-    commonLength = len(commonTags)
-    firstLength = len(firstOnly)
-    secondLength = len(secondOnly)
-    score = min(commonLength, secondLength, firstLength)
-    dict[combo] = score
+        if isinstance(first, int):
+            firsttags = set(Matrix[first][2])
+        else:
+            firsttags = set(Matrix[first[0]][2]).union(set(Matrix[first[1]][2]))
+
+        if isinstance(second, int):
+            secondtags = set(Matrix[second][2])
+        else:
+            secondtags = set(Matrix[second[0]][2]).union(set(Matrix[second[1]][2]))
+        commonTags = firsttags.intersection(secondtags)
+        firstOnly = firsttags.difference(secondtags)
+        #print(firstOnly)
+        secondOnly = secondtags.difference(firsttags)
+        #print(secondOnly)
+        commonLength = len(commonTags)
+        firstLength = len(firstOnly)
+        secondLength = len(secondOnly)
+        score = min(commonLength, secondLength, firstLength)
+        dict[combo] = score
 
 sorted_by_value = sorted(dict.items(), key=lambda kv: kv[1], reverse=True)
-print(sorted_by_value)
+#print(sorted_by_value)
 
 Used = set()
 
@@ -102,7 +126,7 @@ def inSet(item):
     else:
         contains = item[0] in Used or item[1] in Used
         return contains
-#print(sorted_by_value)
+print(len(sorted_by_value))
 Slideshow = []
 Slideshow.append(sorted_by_value[0][0][0])
 Slideshow.append(sorted_by_value[0][0][1])
@@ -112,7 +136,8 @@ addToSet(sorted_by_value[0][0][1])
 print('part3')
 
 count = 2
-while count < N+1:
+print(N)
+while count <100:
     found = False
     index = 0
     #print(index)
@@ -144,6 +169,7 @@ while count < N+1:
                 found = True
         index = index + 1
     count = count + 1
+    print(count)
 
 print(Slideshow)
 
