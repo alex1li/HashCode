@@ -3,8 +3,8 @@ Team Let's Algo to Ireland
 2/28/19
 """
 
-input = "a_example.in"
-output = "output.txt"
+input = "e_shiny_selfies.txt"
+output = "outputE.txt"
 
 """
 Parse Input
@@ -12,30 +12,35 @@ Parse Input
 file = open(input, mode = 'r')
 lines = file.readlines()
 file.close()
-R = 0
-C = 0
-L = 0
-H = 0
+N = 0
 Matrix = []
 firstline = True;
 for line in lines:
     if firstline:
-        R = int(line[0])
-        C = int(line[2])
-        L = int(line[4])
-        H = int(line[6])
+        N = int(line[0])
         firstline = False
     else:
         row = []
-        for s in line:
+        array = line.split()
+        for s in array:
             if s != '\n':
                 row.append(s)
         Matrix.append(row)
 
 #Put Algorithm Here ----------
 
+
+Submission = []
+for m in range(len(Matrix)):
+    if Matrix[m][0] == 'H':
+        Submission.append(m)
+
+#print(Submission)
 """
 Write Output
 """
 f = open(output, "w")
-f.write("Woops! I have deleted the content!") #will overwrite existing content
+#f.write("Woops! I have deleted the content!") #will overwrite existing content
+f.write(str(len(Submission))+'\n')
+for s in Submission:
+    f.write(str(s)+'\n')
