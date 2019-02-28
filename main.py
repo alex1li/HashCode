@@ -2,7 +2,8 @@
 Team Let's Algo to Ireland
 2/28/19
 """
-import numpy as np
+#import numpy as np
+import itertools
 
 input = "c_memorable_moments.txt"
 output = "outputC.txt"
@@ -34,29 +35,31 @@ for line in range(len(lines)):
         row.append(tags)
         Matrix.append(row)
         if(row[0] == 'V'):
-            Verticals.append((line-1,row))
+            Verticals.append(line-1)
         else:
             Horizontals.append(line-1)
 
 #Put Algorithm Here ----------
-#print(Verticals)
+print('part1')
 
-Pairs = []
-for v in Verticals:
-    for r in Verticals:
-        if v[0] != r[0] and (r[0],v[0]) not in Pairs:
-            Pairs.append((v[0],r[0]))
+# Pairs = []
+# for v in Verticals:
+#     for r in Verticals:
+#         if v[0] != r[0] and (r[0],v[0]) not in Pairs:
+#             Pairs.append((v[0],r[0]))
+Pairs = list(itertools.combinations(Verticals, 2))
 #Maybe include Union of tags
 #print(Pairs)
 
 Slides = Horizontals+Pairs
-Combos = []
-for s in Slides:
-    for t in Slides:
-        if s!=t and (t,s) not in Combos:
-            Combos.append((s,t))
+# Combos = []
+# for s in Slides:
+#     for t in Slides:
+#         if s!=t and (t,s) not in Combos:
+#             Combos.append((s,t))
+Combos = list(itertools.combinations(Slides, 2))
 
-
+print('part2')
 
 dict = {}
 for combo in Combos:
@@ -105,6 +108,8 @@ Slideshow.append(sorted_by_value[0][0][0])
 Slideshow.append(sorted_by_value[0][0][1])
 addToSet(sorted_by_value[0][0][0])
 addToSet(sorted_by_value[0][0][1])
+
+print('part3')
 
 count = 2
 while count < N+1:
